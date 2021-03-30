@@ -105,6 +105,10 @@ def quick(array, start, stop, pivot_type):
             pivot_index = partition(array, start, stop)
         else:
             pivot_index = partition_random(array, start, stop)
-        # calling the quick sort function for two sub arrays separately
-        quick(array, start, pivot_index - 1, pivot_type)
-        quick(array, pivot_index + 1, stop, pivot_type)
+        # recurring for the smaller one of the arrays and handling the other one iteratively
+        if pivot_index - start < stop - pivot_index:
+            quick(array, start, pivot_index - 1, pivot_type)
+            start = pivot_index + 1
+        else:
+            quick(array, pivot_index + 1, stop, pivot_type)
+            stop = pivot_index - 1
