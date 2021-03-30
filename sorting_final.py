@@ -29,7 +29,7 @@ def exec_sort(alg, gen):
     size = int(input("Enter the length of the array: "))
     arr = exec_array(gen, size)
     print(*arr, sep=", ")
-
+    print("\n\n")
     if alg == '1':
         start = time.time_ns()
         algorithm.insertion(arr)
@@ -125,12 +125,12 @@ def menu_welcome():
 
 if __name__ == '__main__':
     try:
-        file_insert = open("data/insertion.txt", 'w', encoding='utf8')
-        file_selection = open("data/selection.txt", 'w', encoding='utf8')
-        file_shell = open("data/shell.txt", 'w', encoding='utf8')
-        file_heap = open("data/heap.txt", 'w', encoding='utf8')
-        file_q_rand = open("data/quick_random.txt", 'w', encoding='utf8')
-        file_q_right = open("data/quick_right.txt", 'w', encoding='utf8')
+        file_insert = open("data/insertion.txt", 'a', encoding='utf8')
+        file_selection = open("data/selection.txt", 'a', encoding='utf8')
+        file_shell = open("data/shell.txt", 'a', encoding='utf8')
+        file_heap = open("data/heap.txt", 'a', encoding='utf8')
+        file_q_rand = open("data/quick_random.txt", 'a', encoding='utf8')
+        file_q_right = open("data/quick_right.txt", 'a', encoding='utf8')
         menu_welcome()
         while True:
             screen_clear()
