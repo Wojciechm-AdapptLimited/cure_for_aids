@@ -99,7 +99,7 @@ def partition_random(array, start, stop):
 
 # sorting an array using quick sort algorithm
 def quick(array, start, stop, pivot_type):
-    if start < stop:
+    while start < stop:
         # partitioning the array into the sub arrays with elements smaller and greater than pivot
         if pivot_type == 0:
             pivot_index = partition(array, start, stop)
