@@ -74,45 +74,47 @@ def heap(arr):
         arr[i], arr[0] = arr[0], arr[i]
         heapify(arr, i, 0)
 
+# sorting all elements in relation to the last element (pivot) using the Hoare partition scheme
 def partition(arr, start, stop):
-    # picking the last as a pivot and the first element as an indication of its final position so far
+    # initializing pivot and two indices
     pivot = arr[stop]
     i = start
     j = stop
-    # iterating through the array and swapping elements greater than pivot with smaller ones
-    while i<=j:
-        while arr[i] < pivot and i<=stop:
+    # looping until two indices meet
+    while i < j:
+        # increasing and decreasing indices accordingly, until reaching the first pair of inverted elements
+        while arr[i] < pivot and i <= stop:
             i += 1
-            #print(arr[i],pivot,i)
-        while arr[j] > pivot and j>=start:
+        while arr[j] > pivot and j >= start:
             j -= 1
+        # swapping the inverted elements
         if i <= j:
-            arr[j], arr[i] = arr[i], arr[j]
+            arr[i], arr[j] = arr[j], arr[i]
             i += 1
             j -= 1
-    return i,j
-    #returning the index i and j after i is bigger than j
+    # returning two indices
+    return i, j
+
 
 # changing random element with the last one to create the pivot
-def partition_random(array, start, stop):
+def partition_random(arr, start, stop):
     rand_pivot = random.randrange(start, stop)
-    array[rand_pivot], array[stop] = array[stop], array[rand_pivot]
-    return partition(array, start, stop)
+    arr[rand_pivot], arr[stop] = arr[stop], arr[rand_pivot]
+    return partition(arr, start, stop)
 
 
 # sorting an array using quick sort algorithm
-def quick(array, start, stop, pivot_type):
+def quick(arr, start, stop, pivot_type):
     while start < stop:
         # partitioning the array into the sub arrays with elements smaller and greater than pivot
         if pivot_type == 0:
-            i,j = partition(array, start, stop)
+            i, j = partition(arr, start, stop)
         else:
-            i,j= partition_random(array, start, stop)
-        # recurring for the smaller one of the arrays and handling the other one iteratively
+            i, j = partition_random(arr, start, stop)
+        # recurring first for the smaller one of the arrays and using tail call to recur to the other
         if stop - i < j - start:
-            quick(array, i, stop, pivot_type)
-            stop= j
+            quick(arr, i, stop, pivot_type)
+            stop = j
         else:
-            quick(array, start, j, pivot_type)
+            quick(arr, start, j, pivot_type)
             start = i
-    return array
