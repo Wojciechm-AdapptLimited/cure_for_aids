@@ -22,7 +22,7 @@ def shell(arr):
     # creating an array of gaps using 2^k - 1 pattern
     while gaps[-1] < len(arr):
         index += 1
-        gaps.append(2**index - 1)
+        gaps.append(2 ** index - 1)
     # sorting an array using insertion sort algorithm using gaps created before
     for gap in gaps[::-1]:
         for i in range(gap, len(arr)):
@@ -40,7 +40,7 @@ def selection(arr):
     for i in range(len(arr)):
         # finding the minimum element in unsorted part of the array
         min_index = i
-        for j in range(i+1, len(arr)):
+        for j in range(i + 1, len(arr)):
             if arr[j] < arr[min_index]:
                 min_index = j
         # swapping the minimum element with the first element
@@ -67,28 +67,31 @@ def heapify(arr, size, index):
 # sorting an array using heap sort algorithm
 def heap(arr):
     # building a max heap
-    for i in range(len(arr)//2 - 1, -1, -1):
+    for i in range(len(arr) // 2 - 1, -1, -1):
         heapify(arr, len(arr), i)
     # extracting elements one at the time
     for i in range(len(arr) - 1, 0, -1):
         arr[i], arr[0] = arr[0], arr[i]
         heapify(arr, i, 0)
 
-
-# sorting all elements in relation to the last element (pivot)
 def partition(arr, start, stop):
     # picking the last as a pivot and the first element as an indication of its final position so far
     pivot = arr[stop]
     i = start
+    j = stop
     # iterating through the array and swapping elements greater than pivot with smaller ones
-    for j in range(start, stop):
-        if arr[j] < pivot:
-            arr[i], arr[j] = arr[j], arr[i]
+    while i<=j:
+        while arr[i] < pivot and i<=stop:
             i += 1
-    # swapping pivot with the first element bigger than it
-    arr[i], arr[stop] = arr[stop], arr[i]
-    return i
-
+            #print(arr[i],pivot,i)
+        while arr[j] > pivot and j>=start:
+            j -= 1
+        if i <= j:
+            arr[j], arr[i] = arr[i], arr[j]
+            i += 1
+            j -= 1
+    return i,j
+    #returning the index i and j after i is bigger than j
 
 # changing random element with the last one to create the pivot
 def partition_random(array, start, stop):
@@ -102,13 +105,14 @@ def quick(array, start, stop, pivot_type):
     while start < stop:
         # partitioning the array into the sub arrays with elements smaller and greater than pivot
         if pivot_type == 0:
-            pivot_index = partition(array, start, stop)
+            i,j = partition(array, start, stop)
         else:
-            pivot_index = partition_random(array, start, stop)
+            i,j= partition_random(array, start, stop)
         # recurring for the smaller one of the arrays and handling the other one iteratively
-        if pivot_index - start < stop - pivot_index:
-            quick(array, start, pivot_index - 1, pivot_type)
-            start = pivot_index + 1
+        if stop - i < j - start:
+            quick(array, i, stop, pivot_type)
+            stop= j
         else:
-            quick(array, pivot_index + 1, stop, pivot_type)
-            stop = pivot_index - 1
+            quick(array, start, j, pivot_type)
+            start = i
+    return array
