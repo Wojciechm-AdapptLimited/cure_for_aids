@@ -124,6 +124,8 @@ def menu_welcome():
 
 
 if __name__ == '__main__':
+    if not os.path.exists('data'):
+        os.makedirs('data')
     file_insert, file_selection, file_shell, file_heap, file_q_rand, file_q_right = None, None, None, None, None, None
     try:
         file_insert = open("data/insertion.txt", 'a', encoding='utf8')
