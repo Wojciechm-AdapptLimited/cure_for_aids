@@ -66,7 +66,7 @@ def exec_bst(gen_type):
             time.sleep(5)
         elif op_type == '6':
             start = time.time_ns()
-            bst.balance_tree(root)
+            root = bst.balance_tree(root)
             end = time.time_ns()
             exec_duration = (end - start) / pow(10, 6)
             file_bst.write("{}; 4; {:.10f}ms\n".format(size, exec_duration))

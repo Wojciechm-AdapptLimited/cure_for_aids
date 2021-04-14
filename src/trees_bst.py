@@ -20,12 +20,14 @@ def insert_node(node: TreeNode, val):
                     break
                 else:
                     parent = parent.left_child
-            else:
+            elif parent.value < val:
                 if parent.right_child is None:
                     parent.right_child = new
                     break
                 else:
                     parent = parent.right_child
+            else:
+                break
     new.up = parent
     return node
 
@@ -113,9 +115,10 @@ def delete_tree(node):
 
 def balance_tree(node):
     if node.left_child:
-        rotate_left(node, node.left_child)
+        node = rotate_left(node, node.left_child)
     if node.right_child:
-        rotate_right(node, node.right_child)
+        node = rotate_right(node, node.right_child)
+    return node
 
 
 def rotate_left(node_root, node_temp):
