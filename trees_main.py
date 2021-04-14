@@ -23,7 +23,7 @@ def exec_bst(gen_type):
     root = bst.TreeNode(arr[0])
     start = time.time_ns()
     for item in arr:
-        root = bst.insert_node(root, item, None)
+        root = bst.insert_node(root, item)
     end = time.time_ns()
     exec_duration = (end - start) / pow(10, 6)
     file_bst.write("{}; 1; {:.10f}ms\n".format(size, exec_duration))
@@ -102,7 +102,7 @@ def exec_avl(gen_type):
                         "5) PRINT INORDER\n"
                         "6) DELETE TREE\n"
                         "7) EXIT TO MENU\n"
-                        "8) EXIT")
+                        "8) EXIT\n")
         if op_type == '1':
             print(bst.search_max(root))
             time.sleep(5)

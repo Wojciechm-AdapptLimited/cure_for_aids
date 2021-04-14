@@ -7,16 +7,26 @@ class TreeNode(object):
         self.height = 0
 
 
-def insert_node(node, val, parent):
-    if node is None:
-        new = TreeNode(val)
-        new.up = parent
+def insert_node(node: TreeNode, val):
+    new = TreeNode(val)
+    parent = node
+    if parent is None:
         return new
-    if node.value > val:
-        node.left_child = insert_node(node.left_child, val, node)
-    elif node.value < val:
-        node.right_child = insert_node(node.right_child, val, node)
-    node.height = 1 + max(get_height(node.left_child), get_height(node.right_child))
+    else:
+        while True:
+            if parent.value > val:
+                if parent.left_child is None:
+                    parent.left_child = new
+                    break
+                else:
+                    parent = parent.left_child
+            else:
+                if parent.right_child is None:
+                    parent.right_child = new
+                    break
+                else:
+                    parent = parent.right_child
+    new.up = parent
     return node
 
 
