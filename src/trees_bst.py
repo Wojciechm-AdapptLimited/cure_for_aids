@@ -1,3 +1,6 @@
+import math
+
+
 class TreeNode(object):
     def __init__(self, val):
         self.up = None
@@ -42,11 +45,11 @@ def delete_node(node: TreeNode, val):
     else:
         if node.right_child is None:
             temp = node.left_child
-            temp.up = node.up
+            node = None
             return temp
         if node.left_child is None:
             temp = node.right_child
-            temp.up = node.up
+            node = None
             return temp
         temp = successor(node.right_child)
         node.value = temp.value
@@ -113,11 +116,28 @@ def delete_tree(node):
     node.value = None
 
 
-def balance_tree(node):
-    if node.left_child:
-        node = rotate_left(node, node.left_child)
-    if node.right_child:
-        node = rotate_right(node, node.right_child)
+def balance_tree(node: TreeNode):
+    n = 0
+    p = node
+    while p is not None:
+        if p.left_child is not None:
+            node = rotate_right(node, p)
+            p = p.up
+        else:
+            n += 1
+            p = p.right_child
+    s = n + 1 - math.log2(n + 1)
+    p = node
+    for i in range(int(s) + 1):
+        node = rotate_left(node, p)
+        p = p.up.right_child
+    n -= s
+    while n > 1:
+        n //= 2
+        p = node
+        for i in range(int(n)):
+            node = rotate_left(node, p)
+            p = p.up.right_child
     return node
 
 
