@@ -141,44 +141,44 @@ def balance_tree(node: TreeNode):
     return node
 
 
-def rotate_left(node_root, node_temp):
-    vine = node_temp.right_child
-    tail = node_temp.up
-    if vine:
-        node_temp.right_child = vine.left_child
-        if node_temp.right_child:
-            node_temp.right_child.up = node_temp
-        vine.left_child = node_temp
-        vine.up = tail
-        node_temp.up = vine
-        if tail:
-            if tail.left_child == node_temp:
-                tail.left_child = vine
+def rotate_left(node: TreeNode, a: TreeNode):
+    b = a.right_child
+    parent = a.up
+    if b:
+        a.right_child = b.left_child
+        if a.right_child:
+            a.right_child.up = a
+        b.left_child = a
+        b.up = parent
+        a.up = b
+        if parent:
+            if parent.left_child == a:
+                parent.left_child = b
             else:
-                tail.right_child = vine
+                parent.right_child = b
         else:
-            node_root = vine
-    return node_root
+            node = b
+    return node
 
 
-def rotate_right(node_root, node_temp):
-    vine = node_temp.left_child
-    tail = node_temp.up
-    if vine:
-        node_temp.left_child = vine.right_child
-        if node_temp.left_child:
-            node_temp.left_child.up = node_temp
-        vine.right_child = node_temp
-        vine.up = tail
-        node_temp.up = vine
-        if tail:
-            if tail.left_child == node_temp:
-                tail.left_child = vine
+def rotate_right(node: TreeNode, a: TreeNode):
+    b = a.left_child
+    parent = a.up
+    if b:
+        a.left_child = b.right_child
+        if a.left_child:
+            a.left_child.up = a
+        b.right_child = a
+        b.up = parent
+        a.up = b
+        if parent:
+            if parent.left_child == a:
+                parent.left_child = b
             else:
-                tail.right_child = vine
+                parent.right_child = b
         else:
-            node_root = vine
-    return node_root
+            node = b
+    return node
 
 
 def get_height(node):
