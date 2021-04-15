@@ -3,7 +3,6 @@ from src import trees_bst as bst
 
 class TreeNode(object):
     def __init__(self, val):
-        self.up = None
         self.left_child = None
         self.right_child = None
         self.value = val
@@ -11,15 +10,14 @@ class TreeNode(object):
 
 
 class AVLTree(object):
-    def insert_node(self, arr, parent):
+    def insert_node(self, arr):
         arr = sorted(list(dict.fromkeys(arr)))
         median = (len(arr) - 1) // 2
         node = TreeNode(arr[median])
-        node.up = parent
         if len(arr[:median]) > 0:
-            node.left_child = self.insert_node(arr[:median], node)
+            node.left_child = self.insert_node(arr[:median])
         if len(arr[median + 1:]) > 0:
-            node.right_child = self.insert_node(arr[median + 1:], node)
+            node.right_child = self.insert_node(arr[median + 1:])
         node.height = 1 + max(bst.get_height(node.left_child), bst.get_height(node.right_child))
         return node
 

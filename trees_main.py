@@ -14,19 +14,24 @@ def exec_gen(gen_type, size):
 
 
 def exec_bst(gen_type):
+    size_gen = None
     if gen_type in ['1', '3']:
-        size = int(input("Enter the length of the array: "))
-    else:
-        size = 0
-    arr = exec_gen(gen_type, size)
-    size = len(arr)
+        while True:
+            size_gen = int(input("Enter the length of the array (10 - 999): "))
+            if size_gen not in range(10, 1000):
+                print("Length of the array should not exceed 999 or be lower than 10")
+                continue
+            else:
+                break
+    arr = exec_gen(gen_type, size_gen)
+    size_write = len(arr)
     root = bst.TreeNode(arr[0])
     start = time.time_ns()
     for item in arr:
         root = bst.insert_node(root, item)
     end = time.time_ns()
     exec_duration = (end - start) / pow(10, 6)
-    file_bst.write("{}; 1; {:.10f}ms\n".format(size, exec_duration))
+    file_bst.write("{}; 1; {:.10f}ms\n".format(size_write, exec_duration))
     while True:
         rep.screen_clear()
         print("Select operation type: ")
@@ -47,7 +52,7 @@ def exec_bst(gen_type):
             print(bst.search_min(root))
             end = time.time_ns()
             exec_duration = (end - start) / pow(10, 6)
-            file_bst.write("{}; 2; {:.10f}ms\n".format(size, exec_duration))
+            file_bst.write("{}; 2; {:.10f}ms\n".format(size_write, exec_duration))
             time.sleep(5)
         elif op_type == '3':
             del_num = int(input("How many would you like to delete: "))
@@ -62,14 +67,14 @@ def exec_bst(gen_type):
             print(bst.in_order(root))
             end = time.time_ns()
             exec_duration = (end - start) / pow(10, 6)
-            file_bst.write("{}; 3; {:.10f}ms\n".format(size, exec_duration))
+            file_bst.write("{}; 3; {:.10f}ms\n".format(size_write, exec_duration))
             time.sleep(5)
         elif op_type == '6':
             start = time.time_ns()
             root = bst.balance_tree(root)
             end = time.time_ns()
             exec_duration = (end - start) / pow(10, 6)
-            file_bst.write("{}; 4; {:.10f}ms\n".format(size, exec_duration))
+            file_bst.write("{}; 4; {:.10f}ms\n".format(size_write, exec_duration))
         elif op_type == '7':
             bst.delete_tree(root)
         elif op_type == '8':
@@ -81,17 +86,23 @@ def exec_bst(gen_type):
 
 
 def exec_avl(gen_type):
+    size_gen = None
     if gen_type in ['1', '3']:
-        size = int(input("Enter the length of the array: "))
-    else:
-        size = 0
-    arr = exec_gen(gen_type, size)
+        while True:
+            size_gen = int(input("Enter the length of the array (10 - 999): "))
+            if size_gen not in range(10, 1000):
+                print("Length of the array should not exceed 999 or be lower than 10")
+                continue
+            else:
+                break
+    arr = exec_gen(gen_type, size_gen)
+    size_write = len(arr)
     tree = avl.AVLTree()
     start = time.time_ns()
-    root = tree.insert_node(arr, None)
+    root = tree.insert_node(arr)
     end = time.time_ns()
     exec_duration = (end - start) / pow(10, 6)
-    file_avl.write("{}; 1; {:.10f}ms\n".format(size, exec_duration))
+    file_avl.write("{}; 1; {:.10f}ms\n".format(size_write, exec_duration))
     while True:
         rep.screen_clear()
         print("Select operation type: ")
@@ -111,7 +122,7 @@ def exec_avl(gen_type):
             print(bst.search_min(root))
             end = time.time_ns()
             exec_duration = (end - start) / pow(10, 6)
-            file_avl.write("{}; 2; {:.10f}ms\n".format(size, exec_duration))
+            file_avl.write("{}; 2; {:.10f}ms\n".format(size_write, exec_duration))
             time.sleep(5)
         elif op_type == '3':
             del_num = int(input("How many would you like to delete: "))
@@ -126,7 +137,7 @@ def exec_avl(gen_type):
             print(tree.in_order(root))
             end = time.time_ns()
             exec_duration = (end - start) / pow(10, 6)
-            file_avl.write("{}; 3; {:.10f}ms\n".format(size, exec_duration))
+            file_avl.write("{}; 3; {:.10f}ms\n".format(size_write, exec_duration))
             time.sleep(5)
         elif op_type == '6':
             bst.delete_tree(root)

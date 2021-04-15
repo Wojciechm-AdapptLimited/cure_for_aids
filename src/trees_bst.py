@@ -1,6 +1,3 @@
-import math
-
-
 class TreeNode(object):
     def __init__(self, val):
         self.up = None
@@ -43,12 +40,17 @@ def delete_node(node: TreeNode, val):
     elif node.value < val:
         node.right_child = delete_node(node.right_child, val)
     else:
+        if node.right_child is None and node.left_child is None:
+            node = None
+            return node
         if node.right_child is None:
             temp = node.left_child
+            temp.up = node.up
             node = None
             return temp
         if node.left_child is None:
             temp = node.right_child
+            temp.up = node.up
             node = None
             return temp
         temp = successor(node.right_child)
@@ -116,6 +118,15 @@ def delete_tree(node):
     node.value = None
 
 
+def log_2(x):
+    y = 1
+    x >>= 1
+    while x > 0:
+        y <<= 1
+        x >>= 1
+    return y
+
+
 def balance_tree(node: TreeNode):
     n = 0
     p = node
@@ -126,9 +137,9 @@ def balance_tree(node: TreeNode):
         else:
             n += 1
             p = p.right_child
-    s = n + 1 - math.log2(n + 1)
+    s = n + 1 - log_2(n + 1)
     p = node
-    for i in range(int(s) + 1):
+    for i in range(s):
         node = rotate_left(node, p)
         p = p.up.right_child
     n -= s
@@ -144,14 +155,14 @@ def balance_tree(node: TreeNode):
 def rotate_left(node: TreeNode, a: TreeNode):
     b = a.right_child
     parent = a.up
-    if b:
+    if b is not None:
         a.right_child = b.left_child
-        if a.right_child:
+        if a.right_child is not None:
             a.right_child.up = a
         b.left_child = a
         b.up = parent
         a.up = b
-        if parent:
+        if parent is not None:
             if parent.left_child == a:
                 parent.left_child = b
             else:
@@ -164,14 +175,14 @@ def rotate_left(node: TreeNode, a: TreeNode):
 def rotate_right(node: TreeNode, a: TreeNode):
     b = a.left_child
     parent = a.up
-    if b:
+    if b is not None:
         a.left_child = b.right_child
-        if a.left_child:
+        if a.left_child is not None:
             a.left_child.up = a
         b.right_child = a
         b.up = parent
         a.up = b
-        if parent:
+        if parent is not None:
             if parent.left_child == a:
                 parent.left_child = b
             else:
