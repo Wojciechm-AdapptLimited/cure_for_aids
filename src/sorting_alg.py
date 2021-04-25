@@ -74,6 +74,7 @@ def heap(arr):
         arr[i], arr[0] = arr[0], arr[i]
         heapify(arr, i, 0)
 
+
 # sorting all elements in relation to the last element (pivot) using the Hoare partition scheme
 def partition(arr, start, stop):
     # initializing pivot and two indices
