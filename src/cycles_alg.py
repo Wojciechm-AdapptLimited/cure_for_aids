@@ -105,7 +105,10 @@ class Graph:
         print("\n")
 
     def print_hamiltonian_cycle(self):
-        path = [self.graph[0][0]]
+        if len(self.graph[0])<1:
+            path = [self.graph[1][0]]
+        else:
+            path = [self.graph[0][0]]
         node = len(path)
         depth = {key: 0 for key in range(self.number_of_vertices)}
 
