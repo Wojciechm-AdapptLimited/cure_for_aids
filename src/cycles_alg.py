@@ -140,4 +140,5 @@ class Graph:
                 else:
                     print("Path (2):\t", path)
                 path.pop(-1)
+                depth[vertex] = 0
                 node = node - 1
