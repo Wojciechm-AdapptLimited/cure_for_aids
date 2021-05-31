@@ -68,44 +68,40 @@ class Graph:
                 print("{} | ".format(item), end="")
             print()
 
-    def dfs_count(self, v, visited):
-        count = 1
-        visited[v] = True
-        for i in self.graph[v]:
-            if not visited[i]:
-                count += self.dfs_count(i, visited)
-        return count
-
-    def is_valid_next_edge(self, u, v):
-        if len(self.graph[u]) == 1:
-            return True
-        visited = [False] * self.number_of_vertices
-        count_1 = self.dfs_count(u, visited)
-        self.remove_edge(u, v)
-        visited = [False] * self.number_of_vertices
-        count_2 = self.dfs_count(u, visited)
-        self.add_edge(u, v)
-        return False if count_1 > count_2 else True
-
-    def print_euler_util(self, u):
-        for v in self.graph[u]:
-            if self.is_valid_next_edge(u, v):
-                print("{} - {}".format(u, v), end='\t'),
-                self.remove_edge(u, v)
-                self.print_euler_util(v)
+    def is_eulerian(self):
+        odd = 0
+        odd_vertex = self.vertices_list[0]
+        for i in self.vertices_list:
+            if len(self.graph[i]) % 2 != 0:
+                odd += 1
+                odd_vertex = i
+        if odd == 0:
+            print("\nEulerian cycle:")
+            return True, odd_vertex
+        elif odd == 2:
+            print("\nEulerian path")
+            return True, odd_vertex
+        else:
+            print("\nEuler path/cycle doesn't exist")
+            return False, odd_vertex
 
     def print_euler_tour(self):
-        u = 0
-        for i in range(self.number_of_vertices):
-            if len(self.graph[i]) % 2 != 0:
-                u = i
-                break
-        print("\nEuler path:")
-        self.print_euler_util(u)
-        print("\n")
+        eulerian, start = self.is_eulerian()
+        if eulerian:
+            euler_path = []
+            cur_path = [start]
+            while cur_path:
+                cur_vertex = cur_path[-1]
+                if not self.graph[cur_vertex]:
+                    euler_path.append(cur_vertex)
+                    cur_path.pop()
+                else:
+                    cur_path.append(self.graph[cur_vertex][0])
+                    self.remove_edge(cur_vertex, self.graph[cur_vertex][0])
+            print(euler_path)
 
     def print_hamiltonian_cycle(self):
-        if len(self.graph[0])<1:
+        if len(self.graph[0]) < 1:
             path = [self.graph[1][0]]
         else:
             path = [self.graph[0][0]]
