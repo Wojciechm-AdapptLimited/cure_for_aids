@@ -7,15 +7,16 @@ import time
 def exec_alg():
     file_elements = None
     elements = []
+    number = 0
     try:
         file_elements = open("data/elements.txt", 'r')
         lines = file_elements.readlines()
         for line in lines:
+            number += 1
             line = line.strip().split()
             elements.append((int(line[0]), int(line[1])))
     finally:
         file_elements.close()
-    number = int(input("Enter the number of elements: "))
     capacity = int(input("Enter the knapsack capacity: "))
     while True:
         print("\n")
